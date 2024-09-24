@@ -28,7 +28,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
 import {
-  BookOpen,
+  // BookOpen,
   Headphones,
   Menu,
   Pause,
@@ -474,7 +474,7 @@ export default function AudiobookStore() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Editor's Picks</h2>
+          <h2 className="text-2xl font-bold mb-6">Editor&apos;s Picks</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {editorsPicks.map((book) => (
               <AudiobookCard key={book.id} book={book} />
