@@ -457,7 +457,7 @@ export default function AudiobookStore() {
 
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Bestsellers</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6">
             {bestsellers.map((book) => (
               <AudiobookCard key={book.id} book={book} />
             ))}
