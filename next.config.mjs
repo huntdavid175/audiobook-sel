@@ -16,6 +16,9 @@ const nextConfig = {
       { protocol: "https", hostname: "cdn.myportfolio.com" },
     ],
   },
+  rules: {
+    "no-unused-vars": "off",
+  },
 };
 
 export default nextConfig;
