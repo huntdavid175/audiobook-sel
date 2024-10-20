@@ -19,16 +19,18 @@ export default function SignupConfirmationPage() {
             <Mail className="h-6 w-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold">Check your email</CardTitle>
-          <CardDescription>We've sent you a confirmation link</CardDescription>
+          <CardDescription>
+            We&apos;ve sent you a confirmation link
+          </CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-muted-foreground">
-            We've sent an email to the address you provided. Please click the
-            link in that email to confirm your account.
+            We&apos;ve sent an email to the address you provided. Please click
+            the link in that email to confirm your account.
           </p>
           <p className="text-sm text-muted-foreground">
-            If you don't see the email, check your spam folder or try resending
-            the confirmation email.
+            If you don&apos;t see the email, check your spam folder or try
+            resending the confirmation email.
           </p>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
