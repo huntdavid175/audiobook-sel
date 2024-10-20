@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FcGoogle } from "react-icons/fc";
 
+import { signup } from "../actions";
+
 export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -75,15 +77,16 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <form onSubmit={handleEmailSignup} className="space-y-6">
+          <form action={signup} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input
                 id="name"
                 type="text"
+                name="name"
                 placeholder="Enter your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                // value={name}
+                // onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -92,9 +95,10 @@ export default function SignupPage() {
               <Input
                 id="email"
                 type="email"
+                name="email"
                 placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                // value={email}
+                // onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -103,9 +107,10 @@ export default function SignupPage() {
               <Input
                 id="password"
                 type="password"
+                name="password"
                 placeholder="Create a password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                // value={password}
+                // onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
