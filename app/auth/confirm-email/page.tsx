@@ -39,7 +39,7 @@ export default function SignupConfirmationPage() {
           </Button>
           <div className="text-center text-sm text-muted-foreground">
             <Link
-              href="/login"
+              href="/auth/login"
               className="hover:underline inline-flex items-center"
             >
               Back to login

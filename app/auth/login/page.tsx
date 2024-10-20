@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { FcGoogle } from "react-icons/fc";
+import Link from "next/link";
 
 import { login } from "../actions";
 
@@ -132,9 +133,12 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-muted-foreground">
             Not a member?{" "}
-            <a href="#" className="font-medium text-primary hover:underline">
+            <Link
+              href="/auth/signup"
+              className="font-medium text-primary hover:underline"
+            >
               Start a 14 day free trial
-            </a>
+            </Link>
           </p>
         </div>
       </div>

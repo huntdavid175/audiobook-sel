@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FcGoogle } from "react-icons/fc";
 
 import { signup } from "../actions";
+import Link from "next/link";
 
 export default function SignupPage() {
   // const [name, setName] = useState("");
@@ -137,12 +138,12 @@ export default function SignupPage() {
 
           <p className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              href="/auth/login"
               className="font-medium text-primary hover:underline"
             >
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </div>
