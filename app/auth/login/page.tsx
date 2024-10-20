@@ -10,14 +10,14 @@ import { FcGoogle } from "react-icons/fc";
 import { login } from "../actions";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const handleEmailLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Implement email login logic here
-    console.log("Email login:", email, password);
-  };
+  // const handleEmailLogin = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Implement email login logic here
+  //   console.log("Email login:", email, password);
+  // };
 
   const handleGoogleLogin = () => {
     // Implement Google login logic here

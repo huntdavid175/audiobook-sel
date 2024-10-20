@@ -11,16 +11,16 @@ import { FcGoogle } from "react-icons/fc";
 import { signup } from "../actions";
 
 export default function SignupPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const handleEmailSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Implement email signup logic here
-    console.log("Email signup:", name, email, password, agreeTerms);
-  };
+  // const handleEmailSignup = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Implement email signup logic here
+  //   console.log("Email signup:", name, email, password, agreeTerms);
+  // };
 
   const handleGoogleSignup = () => {
     // Implement Google signup logic here
