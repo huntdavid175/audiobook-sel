@@ -1,15 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FcGoogle } from "react-icons/fc";
+import { Loader } from "lucide-react";
 
 import { signup } from "../actions";
 import Link from "next/link";
+
+const FormButton = ({ terms }: { terms: boolean }) => {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" className="w-full d" disabled={pending || !terms}>
+      {pending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+      Create account
+    </Button>
+  );
+};
 
 export default function SignupPage() {
   // const [name, setName] = useState("");
@@ -131,9 +143,7 @@ export default function SignupPage() {
                 </a>
               </label>
             </div>
-            <Button type="submit" className="w-full" disabled={!agreeTerms}>
-              Create account
-            </Button>
+            <FormButton terms={agreeTerms} />
           </form>
 
           <p className="text-center text-sm text-muted-foreground">

@@ -1,6 +1,8 @@
 "use client";
 
 // import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { Loader2, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +11,16 @@ import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 
 import { login } from "../actions";
+
+const FormButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" className="w-full " disabled={pending}>
+      {pending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+      Sign in
+    </Button>
+  );
+};
 
 export default function LoginPage() {
   // const [email, setEmail] = useState("");
@@ -126,9 +138,7 @@ export default function LoginPage() {
                 </a>
               </div>
             </div>
-            <Button type="submit" className="w-full">
-              Sign in
-            </Button>
+            <FormButton />
           </form>
 
           <p className="text-center text-sm text-muted-foreground">
