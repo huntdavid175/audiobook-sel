@@ -615,14 +615,14 @@ export default function Dashboard() {
           <div className="flex items-center space-x-4">
             <Avatar>
               <AvatarImage
-                src="https://github.com/shadcn.png"
+                src="https://educationweb.com.gh/wp-content/uploads/2023/05/FwMYdOoWcAAEHxi.jpg"
                 alt="Alexander Mark"
               />
-              <AvatarFallback>AM</AvatarFallback>
+              <AvatarFallback>MM</AvatarFallback>
             </Avatar>
-            <span>Alexander Mark</span>
+            <span>Mona Montrage</span>
             <Button variant="ghost" size="icon">
-              <Bell className="h-6 w-6" />
+              <Bell className="h-6 w-6 cursor-pointer" />
             </Button>
           </div>
         </header>

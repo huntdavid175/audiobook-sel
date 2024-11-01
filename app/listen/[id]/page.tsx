@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +21,7 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
+import { createAudioFromText } from "./actions";
 
 type Chapter = {
   id: number;
@@ -59,7 +61,7 @@ export default function AudioStreamingPage() {
       narrator: "John Smith",
       coverUrl:
         "https://m.media-amazon.com/images/I/711Finx0PRL._AC_UF1000,1000_QL80_.jpg",
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      audioUrl: "/audios/46db69db-6834-4866-b4b0-5c472b68cdec.mp3",
       duration: 36000, // 10 hours in seconds
       chapters: [
         { id: 1, title: "Chapter 1: The Beginning", startTime: 0 },
@@ -186,6 +188,15 @@ export default function AudioStreamingPage() {
     <div className="container mx-auto px-4 py-8">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
+          <Button
+            onClick={() =>
+              createAudioFromText(
+                "In the land of myth and a time of magic. The destiny of a great kingdom relies on a young boy. His name, MERLIN!"
+              )
+            }
+          >
+            Create audio file
+          </Button>
           <CardTitle className="text-3xl text-center">
             {audiobook.title}
           </CardTitle>
