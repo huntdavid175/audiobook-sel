@@ -3,15 +3,15 @@ import { BookOpen, Home, Search } from "lucide-react";
 import Link from "next/link";
 
 export default function ErrorPage({
-  type = "no-books",
+  type = "no-book",
 }: {
-  type?: "no-books" | "not-found";
+  type?: "no-book" | "not-found";
 }) {
   const content = {
-    "no-books": {
-      title: "No Books Found",
+    "no-book": {
+      title: "Book Not Found",
       description:
-        "We couldn't find any books matching your search. Try adjusting your filters or search terms.",
+        "We couldn&apos;t find any book matching your search. Try adjusting your filters or search terms.",
       icon: Search,
       action: "Try Another Search",
       actionLink: "/search",
@@ -26,7 +26,7 @@ export default function ErrorPage({
     },
   };
 
-  const { title, description, icon: Icon, action, actionLink } = content[type];
+  const { title, description, icon: Icon } = content[type];
 
   return (
     <div className="min-h-screen bg-[#f7f7f7] flex flex-col items-center justify-center p-4">

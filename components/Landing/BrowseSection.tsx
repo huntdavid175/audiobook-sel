@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-type Book = {
+export type Book = {
   id: string;
   title: string;
   author: string;
@@ -246,7 +246,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
   );
 }
 
-export default function BrowseSection({ books }: { books: any }) {
+export default function BrowseSection({ books }: { books: Book[] }) {
   return (
     <div className="bg-[#000914] py-8">
       <div className="container mx-auto px-4">

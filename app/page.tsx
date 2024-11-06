@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import BrowseSection from "@/components/Landing/BrowseSection";
+import BrowseSection, { Book } from "@/components/Landing/BrowseSection";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Component() {
@@ -11,6 +11,8 @@ export default async function Component() {
   if (error) {
     console.log(error);
   }
+
+  const books: Book[] = data as Book[];
 
   // const carouselItems = [
   //   {
@@ -207,7 +209,7 @@ export default async function Component() {
 
       {/* Browse  */}
       <section className=" py-">
-        <BrowseSection books={data} />
+        <BrowseSection books={books} />
       </section>
     </div>
   );
