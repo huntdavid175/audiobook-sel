@@ -69,8 +69,7 @@ export default function AudiobookPage() {
       author: "Jane Doe",
       narrator: "John Smith",
       price: 19.99,
-      coverUrl:
-        "https://www.adobe.com/express/create/cover/media_19d5e212dbe8553614c3a9fbabd4d7f219ab01c85.png?width=750&format=png&optimize=medium",
+      coverUrl: "https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg",
 
       previewUrl:
         "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
@@ -119,8 +118,7 @@ export default function AudiobookPage() {
         author: "Emily Brown",
         narrator: "Sarah Johnson",
         price: 18.99,
-        coverUrl:
-          "https://cdn.pastemagazine.com/www/articles/2019/12/06/cryingbookbbc19final.jpg",
+        coverUrl: "https://m.media-amazon.com/images/I/51+gvyZG96L._SL160_.jpg",
         previewUrl: "",
         description: "",
         genre: "Mystery",
@@ -137,8 +135,7 @@ export default function AudiobookPage() {
         author: "Michael Green",
         narrator: "David Wilson",
         price: 17.99,
-        coverUrl:
-          "https://m.media-amazon.com/images/I/711Finx0PRL._AC_UF1000,1000_QL80_.jpg",
+        coverUrl: "https://m.media-amazon.com/images/I/41jtwBpH9oL._SL320_.jpg",
         previewUrl: "",
         description: "",
         genre: "Historical Fiction",
@@ -155,8 +152,7 @@ export default function AudiobookPage() {
         author: "Samantha Lee",
         narrator: "Robert Taylor",
         price: 20.99,
-        coverUrl:
-          "https://beetifulbookcovers.com/wp-content/uploads/2023/05/DeathOfAnAngel.jpg",
+        coverUrl: "https://m.media-amazon.com/images/I/41P2hA7g1bL._SL160_.jpg",
         previewUrl: "",
         description: "",
         genre: "Science Fiction",
@@ -268,10 +264,10 @@ export default function AudiobookPage() {
                 )}
                 {isPlaying ? "Pause Preview" : "Listen to Preview"}
               </Button>
-              <Button variant="secondary" className="w-full">
+              {/* <Button variant="secondary" className="w-full">
                 <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart - $
                 {audiobook.price.toFixed(2)}
-              </Button>
+              </Button> */}
             </CardFooter>
           </Card>
         </div>
@@ -337,26 +333,32 @@ export default function AudiobookPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {relatedBooks.map((book) => (
                 <Card key={book.id}>
-                  <CardHeader className="p-0">
-                    <img
-                      src={book.coverUrl}
-                      alt={`${book.title} cover`}
-                      className="w-full h-auto rounded-t-lg"
-                    />
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <CardTitle className="text-lg mb-2">{book.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      By {book.author}
-                    </p>
-                    <div className="flex items-center mb-2">
-                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
-                      <span className="text-sm">{book.rating.toFixed(1)}</span>
-                    </div>
-                    <p className="text-sm font-bold">
-                      ${book.price.toFixed(2)}
-                    </p>
-                  </CardContent>
+                  <Link href={`/audiobook/${book.id}`}>
+                    <CardHeader className="p-0">
+                      <img
+                        src={book.coverUrl}
+                        alt={`${book.title} cover`}
+                        className="w-full h-auto rounded-t-lg"
+                      />
+                    </CardHeader>
+                    <CardContent className="p-4">
+                      <CardTitle className="text-lg mb-2">
+                        {book.title}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        By {book.author}
+                      </p>
+                      <div className="flex items-center mb-2">
+                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                        <span className="text-sm">
+                          {book.rating.toFixed(1)}
+                        </span>
+                      </div>
+                      {/* <p className="text-sm font-bold">
+                        ${book.price.toFixed(2)}
+                      </p> */}
+                    </CardContent>
+                  </Link>
                 </Card>
               ))}
             </div>

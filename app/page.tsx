@@ -152,7 +152,7 @@ export default function Component() {
             </div>
             <div className="absolute -right-32 top-1/4">
               <Image
-                src="https://m.media-amazon.com/images/I/51CatMooFnL._SL500_.jpg"
+                src="https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg"
                 width={150}
                 height={150}
                 alt="Podcast cover"
@@ -164,7 +164,7 @@ export default function Component() {
       </section>
 
       {/* Popular Now Section */}
-      <section className="container mx-auto px-4 py-16">
+      {/* <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Hear what's popular now
@@ -243,10 +243,10 @@ export default function Component() {
             <ChevronRight className="w-12 h-12 text-white" />
           </Button>
         </div>
-      </section>
+      </section> */}
 
       {/* Browse  */}
-      <section className="mt-16 py-16">
+      <section className=" py-16">
         <BrowseSection />
       </section>
     </div>

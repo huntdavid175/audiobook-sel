@@ -189,21 +189,23 @@ function CategoryCarousel({ category }: { category: Category }) {
           <div className="flex gap-4">
             {category.podcasts.map((podcast) => (
               <div key={podcast.id} className="flex-shrink-0 w-60">
-                <div className="relative aspect-square mb-2">
-                  <Image
-                    src={podcast.image}
-                    alt={podcast.title}
-                    width={240}
-                    height={240}
-                    className="rounded-lg object-cover"
-                  />
-                </div>
-                <h3 className="text-white font-medium text-sm line-clamp-1">
-                  {podcast.title}
-                </h3>
-                <p className="text-gray-400 text-sm line-clamp-1">
-                  Written by: {podcast.author}
-                </p>
+                <Link href="/audiobook/3">
+                  <div className="relative aspect-square mb-2">
+                    <Image
+                      src={podcast.image}
+                      alt={podcast.title}
+                      width={240}
+                      height={240}
+                      className="rounded-lg object-cover"
+                    />
+                  </div>
+                  <h3 className="text-white font-medium text-sm line-clamp-1">
+                    {podcast.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm line-clamp-1">
+                    Written by: {podcast.author}
+                  </p>
+                </Link>
               </div>
             ))}
           </div>

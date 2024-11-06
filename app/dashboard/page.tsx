@@ -18,7 +18,7 @@
 //   SheetHeader,
 //   SheetTitle,
 //   SheetTrigger,
-// } from "@/components/ui/sheet";
+// } from "@/components/ui/sheet";npm run
 // import {
 //   DropdownMenu,
 //   DropdownMenuContent,
@@ -593,30 +593,30 @@ export default function Component() {
                 <Link href="/library" className="text-black font-medium">
                   Library
                 </Link>
-                <Link
+                {/* <Link
                   href="/wish-list"
                   className="text-gray-600 hover:text-black"
                 >
                   Wish List
-                </Link>
+                </Link> */}
                 <div className="relative group">
                   <button className="flex items-center gap-1 text-gray-600 hover:text-black">
                     Browse
                     <ChevronDown className="h-4 w-4" />
                   </button>
                 </div>
-                <Link
+                {/* <Link
                   href="/plus-catalogue"
                   className="text-gray-600 hover:text-black"
                 >
                   Plus Catalogue
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="/why-audible"
                   className="text-gray-600 hover:text-black"
                 >
                   Why Audible?
-                </Link>
+                </Link> */}
               </nav>
             </div>
 
@@ -630,12 +630,12 @@ export default function Component() {
               </div>
               <div className="flex items-center gap-4">
                 <button className="text-gray-600 hover:text-black">
-                  Hi, fawaz! <ChevronDown className="inline-block h-4 w-4" />
+                  Hi, Jake! <ChevronDown className="inline-block h-4 w-4" />
                 </button>
-                <button className="text-gray-600 hover:text-black">
+                {/* <button className="text-gray-600 hover:text-black">
                   0 Credits Available{" "}
                   <ChevronDown className="inline-block h-4 w-4" />
-                </button>
+                </button> */}
                 <Link
                   href="/contact"
                   className="text-gray-600 hover:text-black"
