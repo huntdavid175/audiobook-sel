@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -23,23 +20,23 @@ import {
   Volume2,
 } from "lucide-react";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/server";
+import { notFound } from "next/navigation";
 
-type Audiobook = {
-  id: number;
+type Book = {
+  id: string;
   title: string;
   author: string;
-  narrator: string;
+  image: string;
   price: number;
-  coverUrl: string;
-  previewUrl: string;
-  description: string;
-  genre: string;
-  duration: string;
-  rating: number;
-  releaseDate: string;
-  publisher: string;
-  language: string;
-  isbn: string;
+  rating: number | null;
+  duration: string | null;
+  genre_id: string;
+  narrator: string | null;
+  publisher: string | null;
+  created_at: string;
+  description: string | null;
+  release_date: string | null;
 };
 
 type Review = {
@@ -50,173 +47,199 @@ type Review = {
   date: string;
 };
 
-export default function AudiobookPage() {
-  const { id } = useParams();
-  const [audiobook, setAudiobook] = useState<Audiobook | null>(null);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [relatedBooks, setRelatedBooks] = useState<Audiobook[]>([]);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+export default async function AudiobookPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const supabase = createClient();
 
-  useEffect(() => {
-    // In a real application, you would fetch the audiobook data from an API
-    // For this example, we'll use mock data
-    const mockAudiobook: Audiobook = {
-      id: Number(id),
-      title: "The Great Adventure",
-      author: "Jane Doe",
-      narrator: "John Smith",
-      price: 19.99,
-      coverUrl: "https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg",
+  const { data: audiobookData, error: audiobookDataError } = await supabase
+    .from("books")
+    .select("*")
+    .eq("id", params.id);
 
-      previewUrl:
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-      description:
-        "An epic journey through uncharted territories, filled with excitement and discovery. Follow our protagonist as they navigate through treacherous landscapes, encounter fascinating creatures, and uncover ancient mysteries. This audiobook will transport you to a world of wonder and keep you on the edge of your seat from start to finish.",
-      genre: "Adventure",
-      duration: "10 hours 30 minutes",
-      rating: 4.5,
-      releaseDate: "2023-06-15",
-      publisher: "Audiobooks Publishing House",
-      language: "English",
-      isbn: "978-1234567890",
-    };
-
-    const mockReviews: Review[] = [
-      {
-        id: 1,
-        userName: "AudioFan123",
-        rating: 5,
-        comment:
-          "Absolutely loved this audiobook! The narrator's voice brought the story to life.",
-        date: "2023-07-01",
-      },
-      {
-        id: 2,
-        userName: "BookwormAlice",
-        rating: 4,
-        comment:
-          "Great story, but I felt it dragged a bit in the middle. Overall, still a good listen.",
-        date: "2023-06-28",
-      },
-      {
-        id: 3,
-        userName: "AdventureSeeker",
-        rating: 5,
-        comment:
-          "Couldn't stop listening! The descriptions of the landscapes were so vivid.",
-        date: "2023-06-20",
-      },
-    ];
-
-    const mockRelatedBooks: Audiobook[] = [
-      {
-        id: 101,
-        title: "Mystery in the Mountains",
-        author: "Emily Brown",
-        narrator: "Sarah Johnson",
-        price: 18.99,
-        coverUrl: "https://m.media-amazon.com/images/I/51+gvyZG96L._SL160_.jpg",
-        previewUrl: "",
-        description: "",
-        genre: "Mystery",
-        duration: "8 hours 45 minutes",
-        rating: 4.2,
-        releaseDate: "2023-05-01",
-        publisher: "",
-        language: "",
-        isbn: "",
-      },
-      {
-        id: 102,
-        title: "Echoes of the Past",
-        author: "Michael Green",
-        narrator: "David Wilson",
-        price: 17.99,
-        coverUrl: "https://m.media-amazon.com/images/I/41jtwBpH9oL._SL320_.jpg",
-        previewUrl: "",
-        description: "",
-        genre: "Historical Fiction",
-        duration: "12 hours 15 minutes",
-        rating: 4.7,
-        releaseDate: "2023-04-15",
-        publisher: "",
-        language: "",
-        isbn: "",
-      },
-      {
-        id: 103,
-        title: "Futuristic Frontiers",
-        author: "Samantha Lee",
-        narrator: "Robert Taylor",
-        price: 20.99,
-        coverUrl: "https://m.media-amazon.com/images/I/41P2hA7g1bL._SL160_.jpg",
-        previewUrl: "",
-        description: "",
-        genre: "Science Fiction",
-        duration: "9 hours 30 minutes",
-        rating: 4.4,
-        releaseDate: "2023-07-01",
-        publisher: "",
-        language: "",
-        isbn: "",
-      },
-    ];
-
-    setAudiobook(mockAudiobook);
-    setReviews(mockReviews);
-    setRelatedBooks(mockRelatedBooks);
-  }, [id]);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateProgress = () => {
-      if (audio.duration) {
-        setProgress((audio.currentTime / audio.duration) * 100);
-      }
-    };
-
-    audio.addEventListener("timeupdate", updateProgress);
-    return () => audio.removeEventListener("timeupdate", updateProgress);
-  }, []);
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current?.pause();
-    } else {
-      audioRef.current?.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleVolumeChange = (newVolume: number[]) => {
-    const volumeValue = newVolume[0];
-    setVolume(volumeValue);
-    if (audioRef.current) {
-      audioRef.current.volume = volumeValue;
-    }
-  };
-
-  if (!audiobook) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>;
+  if (audiobookDataError) {
+    console.error(audiobookDataError);
+    notFound();
   }
 
+  const { data: relatedBooksData, error: relatedBooksDataError } =
+    await supabase.from("books").select("*").limit(3).neq("id", params.id);
+
+  if (relatedBooksDataError) {
+    console.error(relatedBooksDataError);
+  }
+
+  const audiobook: Book = audiobookData && audiobookData[0];
+  const relatedBooks: Book[] = relatedBooksData ?? [];
+
+  // const { id } = useParams();
+  // const [audiobook, setAudiobook] = useState<Audiobook | null>(null);
+  // const [reviews, setReviews] = useState<Review[]>([]);
+  // const [relatedBooks, setRelatedBooks] = useState<Audiobook[]>([]);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [progress, setProgress] = useState(0);
+  // const [volume, setVolume] = useState(0.5);
+  // const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // useEffect(() => {
+  //   // In a real application, you would fetch the audiobook data from an API
+  //   // For this example, we'll use mock data
+  //   const mockAudiobook: Audiobook = {
+  //     id: Number(id),
+  //     title: "The Great Adventure",
+  //     author: "Jane Doe",
+  //     narrator: "John Smith",
+  //     price: 19.99,
+  //     coverUrl: "https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg",
+
+  //     previewUrl:
+  //       "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  //     description:
+  //       "An epic journey through uncharted territories, filled with excitement and discovery. Follow our protagonist as they navigate through treacherous landscapes, encounter fascinating creatures, and uncover ancient mysteries. This audiobook will transport you to a world of wonder and keep you on the edge of your seat from start to finish.",
+  //     genre: "Adventure",
+  //     duration: "10 hours 30 minutes",
+  //     rating: 4.5,
+  //     releaseDate: "2023-06-15",
+  //     publisher: "Audiobooks Publishing House",
+  //     language: "English",
+  //     isbn: "978-1234567890",
+  //   };
+
+  const mockReviews: Review[] = [
+    {
+      id: 1,
+      userName: "AudioFan123",
+      rating: 5,
+      comment:
+        "Absolutely loved this audiobook! The narrator's voice brought the story to life.",
+      date: "2023-07-01",
+    },
+    {
+      id: 2,
+      userName: "BookwormAlice",
+      rating: 4,
+      comment:
+        "Great story, but I felt it dragged a bit in the middle. Overall, still a good listen.",
+      date: "2023-06-28",
+    },
+    {
+      id: 3,
+      userName: "AdventureSeeker",
+      rating: 5,
+      comment:
+        "Couldn't stop listening! The descriptions of the landscapes were so vivid.",
+      date: "2023-06-20",
+    },
+  ];
+
+  //   const mockRelatedBooks: Audiobook[] = [
+  //     {
+  //       id: 101,
+  //       title: "Mystery in the Mountains",
+  //       author: "Emily Brown",
+  //       narrator: "Sarah Johnson",
+  //       price: 18.99,
+  //       coverUrl: "https://m.media-amazon.com/images/I/51+gvyZG96L._SL160_.jpg",
+  //       previewUrl: "",
+  //       description: "",
+  //       genre: "Mystery",
+  //       duration: "8 hours 45 minutes",
+  //       rating: 4.2,
+  //       releaseDate: "2023-05-01",
+  //       publisher: "",
+  //       language: "",
+  //       isbn: "",
+  //     },
+  //     {
+  //       id: 102,
+  //       title: "Echoes of the Past",
+  //       author: "Michael Green",
+  //       narrator: "David Wilson",
+  //       price: 17.99,
+  //       coverUrl: "https://m.media-amazon.com/images/I/41jtwBpH9oL._SL320_.jpg",
+  //       previewUrl: "",
+  //       description: "",
+  //       genre: "Historical Fiction",
+  //       duration: "12 hours 15 minutes",
+  //       rating: 4.7,
+  //       releaseDate: "2023-04-15",
+  //       publisher: "",
+  //       language: "",
+  //       isbn: "",
+  //     },
+  //     {
+  //       id: 103,
+  //       title: "Futuristic Frontiers",
+  //       author: "Samantha Lee",
+  //       narrator: "Robert Taylor",
+  //       price: 20.99,
+  //       coverUrl: "https://m.media-amazon.com/images/I/41P2hA7g1bL._SL160_.jpg",
+  //       previewUrl: "",
+  //       description: "",
+  //       genre: "Science Fiction",
+  //       duration: "9 hours 30 minutes",
+  //       rating: 4.4,
+  //       releaseDate: "2023-07-01",
+  //       publisher: "",
+  //       language: "",
+  //       isbn: "",
+  //     },
+  //   ];
+
+  //   setAudiobook(mockAudiobook);
+  //   setReviews(mockReviews);
+  //   setRelatedBooks(mockRelatedBooks);
+  // }, [id]);
+
+  // useEffect(() => {
+  //   const audio = audioRef.current;
+  //   if (!audio) return;
+
+  //   const updateProgress = () => {
+  //     if (audio.duration) {
+  //       setProgress((audio.currentTime / audio.duration) * 100);
+  //     }
+  //   };
+
+  //   audio.addEventListener("timeupdate", updateProgress);
+  //   return () => audio.removeEventListener("timeupdate", updateProgress);
+  // }, []);
+
+  // const togglePlayPause = () => {
+  //   if (isPlaying) {
+  //     audioRef.current?.pause();
+  //   } else {
+  //     audioRef.current?.play();
+  //   }
+  //   setIsPlaying(!isPlaying);
+  // };
+
+  // const handleVolumeChange = (newVolume: number[]) => {
+  //   const volumeValue = newVolume[0];
+  //   setVolume(volumeValue);
+  //   if (audioRef.current) {
+  //     audioRef.current.volume = volumeValue;
+  //   }
+  // };
+
+  // if (!audiobook) {
+  //   return <div className="container mx-auto px-4 py-8">Loading...</div>;
+  // }
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pt-8 pb-28 ">
       <Link href="/" className="text-primary hover:underline mb-4 inline-block">
         &larr; Back to Home
       </Link>
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-1">
           <Card>
-            <CardHeader className="p-0 w-full h-[450px] relative">
+            <CardHeader className="p-0 aspect-square relative">
               <Image
-                src={audiobook.coverUrl}
-                alt={`${audiobook.title} cover`}
+                src={audiobook?.image}
+                alt={`${audiobook?.title} cover`}
                 fill
                 style={{ objectFit: "cover", objectPosition: "center center" }}
                 className=" rounded-t-lg"
@@ -232,42 +255,45 @@ export default function AudiobookPage() {
               </p>
               <div className="flex items-center mb-2">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400 mr-1" />
-                <span>
+                {/* <span>
                   {audiobook.rating.toFixed(1)} ({reviews.length} reviews)
-                </span>
+                </span> */}
               </div>
-              <p className="text-sm text-muted-foreground mb-2">
+              {/* <p className="text-sm text-muted-foreground mb-2">
                 Genre: {audiobook.genre}
-              </p>
+              </p> */}
               <p className="text-sm text-muted-foreground mb-2">
                 Duration: {audiobook.duration}
               </p>
               <p className="text-sm text-muted-foreground mb-2">
-                Released: {audiobook.releaseDate}
+                Released: {audiobook.release_date}
               </p>
               <p className="text-sm text-muted-foreground mb-2">
                 Publisher: {audiobook.publisher}
               </p>
-              <p className="text-sm text-muted-foreground mb-2">
+              {/* <p className="text-sm text-muted-foreground mb-2">
                 Language: {audiobook.language}
-              </p>
-              <p className="text-sm text-muted-foreground">
+              </p> */}
+              {/* <p className="text-sm text-muted-foreground">
                 ISBN: {audiobook.isbn}
-              </p>
+              </p> */}
             </CardContent>
             <CardFooter className="p-4 flex flex-col space-y-2">
-              <Button className="w-full" onClick={togglePlayPause}>
+              {/* <Button
+                className="w-full"
+                //  onClick={togglePlayPause}
+              >
                 {isPlaying ? (
                   <Pause className="mr-2 h-4 w-4" />
                 ) : (
                   <Headphones className="mr-2 h-4 w-4" />
                 )}
                 {isPlaying ? "Pause Preview" : "Listen to Preview"}
-              </Button>
-              {/* <Button variant="secondary" className="w-full">
+              </Button> */}
+              <Button variant="secondary" className="w-full">
                 <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart - $
                 {audiobook.price.toFixed(2)}
-              </Button> */}
+              </Button>
             </CardFooter>
           </Card>
         </div>
@@ -295,7 +321,7 @@ export default function AudiobookPage() {
                   <CardTitle>Customer Reviews</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {reviews.map((review) => (
+                  {mockReviews.map((review) => (
                     <div
                       key={review.id}
                       className="mb-4 pb-4 border-b last:border-b-0"
@@ -336,7 +362,7 @@ export default function AudiobookPage() {
                   <Link href={`/audiobook/${book.id}`}>
                     <CardHeader className="p-0">
                       <img
-                        src={book.coverUrl}
+                        src={book.image}
                         alt={`${book.title} cover`}
                         className="w-full h-auto rounded-t-lg"
                       />
@@ -351,7 +377,7 @@ export default function AudiobookPage() {
                       <div className="flex items-center mb-2">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
                         <span className="text-sm">
-                          {book.rating.toFixed(1)}
+                          {book.rating ? book.rating.toFixed(1) : 4.4}
                         </span>
                       </div>
                       {/* <p className="text-sm font-bold">
@@ -366,7 +392,7 @@ export default function AudiobookPage() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
+      {/* <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
         <div className="container mx-auto flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -394,9 +420,9 @@ export default function AudiobookPage() {
           </div>
           <Progress value={progress} className="w-full" />
         </div>
-      </div>
+      </div> */}
 
-      <audio ref={audioRef} src={audiobook.previewUrl} />
+      {/* <audio ref={audioRef} src={audiobook.previewUrl} /> */}
     </div>
   );
 }

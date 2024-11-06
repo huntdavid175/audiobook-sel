@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft, ChevronRight, Globe, Search } from "lucide-react";
@@ -7,94 +5,60 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import BrowseSection from "@/components/Landing/BrowseSection";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Component() {
-  const carouselItems = [
-    {
-      id: 1,
-      title: "Office Ladies",
-      image: "https://m.media-amazon.com/images/I/413pXgU21sL._SL500_.jpg",
-    },
-    {
-      id: 2,
-      title: "Ear Biscuits",
-      image: "https://m.media-amazon.com/images/I/51CatMooFnL._SL500_.jpg",
-    },
-    {
-      id: 3,
-      title: "True Crime All The Time",
-      image: "https://m.media-amazon.com/images/I/515mMtCrWJL._SL500_.jpg",
-    },
-    {
-      id: 4,
-      title: "This is Actually Happening",
-      image: "https://m.media-amazon.com/images/I/51YWboDnGpL._SL500_.jpg",
-    },
-    {
-      id: 5,
-      title: "Business Wars",
-      image: "https://m.media-amazon.com/images/I/31X7tKX1Y7L._SL500_.jpg",
-    },
-  ];
+export default async function Component() {
+  const supabase = createClient();
 
-  const [currentIndex, setCurrentIndex] = useState(2);
+  const { data, error } = await supabase.from("genres").select("*, books(*)");
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-  };
+  if (error) {
+    console.log(error);
+  }
 
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + carouselItems.length) % carouselItems.length
-    );
-  };
+  // const carouselItems = [
+  //   {
+  //     id: 1,
+  //     title: "Office Ladies",
+  //     image: "https://m.media-amazon.com/images/I/413pXgU21sL._SL500_.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Ear Biscuits",
+  //     image: "https://m.media-amazon.com/images/I/51CatMooFnL._SL500_.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "True Crime All The Time",
+  //     image: "https://m.media-amazon.com/images/I/515mMtCrWJL._SL500_.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "This is Actually Happening",
+  //     image: "https://m.media-amazon.com/images/I/51YWboDnGpL._SL500_.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Business Wars",
+  //     image: "https://m.media-amazon.com/images/I/31X7tKX1Y7L._SL500_.jpg",
+  //   },
+  // ];
+
+  // const [currentIndex, setCurrentIndex] = useState(2);
+
+  // const nextSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
+  // };
+
+  // const prevSlide = () => {
+  //   setCurrentIndex(
+  //     (prevIndex) =>
+  //       (prevIndex - 1 + carouselItems.length) % carouselItems.length
+  //   );
+  // };
 
   return (
     <div className="min-h-screen bg-[#000914] pb-20">
-      {/* Header */}
-      <header className="border-b border-gray-800 bg-white">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="#" className="text-violet-400 font-bold text-2xl">
-              dollarbook
-            </Link>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="#" className="text-black hover:text-violet-400">
-                Browse
-              </Link>
-              <Link href="#" className="text-black hover:text-violet-400">
-                Why DollarBook?
-              </Link>
-              <Link href="#" className="text-black hover:text-violet-400">
-                Blog
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="relative hidden md:block">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                className="w-[300px] pl-10 bg-white"
-                placeholder="Search for a great book"
-              />
-            </div>
-            <div className="flex items-center gap-4 text-white">
-              <Link href="#" className="hover:text-violet-400">
-                Contact Us
-              </Link>
-              <Button variant="ghost" size="sm" className="text-white">
-                <Globe className="w-4 h-4 mr-2" />
-                English
-              </Button>
-              <Link href="#" className="hover:text-violet-400">
-                Sign In
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-transparent transform -skew-x-12 translate-x-1/4" />
@@ -122,13 +86,13 @@ export default function Component() {
               Top-rated shows, news, comedy, true crime, storytelling–it's all
               here.
             </p>
-            <Button className="bg-violet-400 hover:bg-violet-500 text-black font-semibold px-8 py-6 text-lg rounded-full">
+            {/* <Button className="bg-violet-400 hover:bg-violet-500 text-black font-semibold px-8 py-6 text-lg rounded-full">
               Try for $0.00
-            </Button>
-            <p className="text-sm text-gray-400 mt-4">
+            </Button> */}
+            {/* <p className="text-sm text-gray-400 mt-4">
               New customers only. Auto-renews at $14.95/mo. + applicable tax
               after 30 days. Cancel anytime.
-            </p>
+            </p> */}
           </div>
 
           {/* Phone Mockup */}
@@ -246,8 +210,8 @@ export default function Component() {
       </section> */}
 
       {/* Browse  */}
-      <section className=" py-16">
-        <BrowseSection />
+      <section className=" py-">
+        <BrowseSection books={data} />
       </section>
     </div>
   );
