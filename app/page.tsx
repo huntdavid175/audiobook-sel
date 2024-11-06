@@ -1,9 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Globe, Search } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+
 import BrowseSection from "@/components/Landing/BrowseSection";
 import { createClient } from "@/utils/supabase/server";
 

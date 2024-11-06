@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,17 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Slider } from "@/components/ui/slider";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Headphones,
-  Pause,
-  Play,
-  ShoppingCart,
-  Star,
-  Volume2,
-} from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
