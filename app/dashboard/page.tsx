@@ -766,8 +766,8 @@ export default function Component() {
             Your Library looks empty
           </h2>
           <p className="text-gray-600 mb-8">
-            When you buy or add titles to your Library, they'll be displayed
-            here.
+            When you buy or add titles to your Library, they&apos;ll be
+            displayed here.
           </p>
           <Button className="rounded-full">Browse Catalog</Button>
         </div>
