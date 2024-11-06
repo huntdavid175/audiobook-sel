@@ -16,10 +16,7 @@ const nextConfig = {
       { protocol: "https", hostname: "cdn.myportfolio.com" },
     ],
   },
-  rules: {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-  },
+  rules: {},
 };
 
 export default nextConfig;
