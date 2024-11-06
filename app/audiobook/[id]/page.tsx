@@ -22,6 +22,7 @@ import {
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
+import Player from "@/components/Audio/Player";
 
 type Book = {
   id: string;
@@ -37,6 +38,7 @@ type Book = {
   created_at: string;
   description: string | null;
   release_date: string | null;
+  preview_url: string | null;
 };
 
 type Review = {
@@ -251,25 +253,27 @@ export default async function AudiobookPage({
                 By {audiobook.author}
               </p>
               <p className="text-sm text-muted-foreground mb-2">
-                Narrated by: {audiobook.narrator}
+                Narrated by: {audiobook.narrator ? audiobook.narrator : "N/A"}
               </p>
               <div className="flex items-center mb-2">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400 mr-1" />
-                {/* <span>
-                  {audiobook.rating.toFixed(1)} ({reviews.length} reviews)
-                </span> */}
+                <span>
+                  {audiobook.rating ? audiobook.rating.toFixed(1) : 4.4}
+                  {/* ({reviews.length} reviews) */}
+                </span>
               </div>
               {/* <p className="text-sm text-muted-foreground mb-2">
                 Genre: {audiobook.genre}
               </p> */}
               <p className="text-sm text-muted-foreground mb-2">
-                Duration: {audiobook.duration}
+                Duration: {audiobook.duration ? audiobook.duration : "N/A"}
               </p>
               <p className="text-sm text-muted-foreground mb-2">
-                Released: {audiobook.release_date}
+                Released:{" "}
+                {audiobook.release_date ? audiobook.release_date : "N/A"}
               </p>
               <p className="text-sm text-muted-foreground mb-2">
-                Publisher: {audiobook.publisher}
+                Publisher: {audiobook.publisher ? audiobook.publisher : "N/A"}
               </p>
               {/* <p className="text-sm text-muted-foreground mb-2">
                 Language: {audiobook.language}
@@ -392,37 +396,7 @@ export default async function AudiobookPage({
         </div>
       </div>
 
-      {/* <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
-        <div className="container mx-auto flex flex-col space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" onClick={togglePlayPause}>
-                {isPlaying ? (
-                  <Pause className="h-6 w-6" />
-                ) : (
-                  <Play className="h-6 w-6" />
-                )}
-              </Button>
-              <div className="text-sm font-medium">
-                {audiobook.title} - Preview
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Volume2 className="h-4 w-4" />
-              <Slider
-                className="w-24"
-                value={[volume]}
-                max={1}
-                step={0.01}
-                onValueChange={handleVolumeChange}
-              />
-            </div>
-          </div>
-          <Progress value={progress} className="w-full" />
-        </div>
-      </div> */}
-
-      {/* <audio ref={audioRef} src={audiobook.previewUrl} /> */}
+      <Player previewUrl={audiobook.preview_url} bookTitle={audiobook.title} />
     </div>
   );
 }
