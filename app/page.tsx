@@ -81,8 +81,8 @@ export default async function Component() {
               Audiobooks
             </h1>
             <p className="text-lg text-gray-300 mb-8">
-              Top-rated shows, news, comedy, true crime, storytelling–it's all
-              here.
+              Top-rated shows, news, comedy, true crime, storytelling–it&apos;s
+              all here.
             </p>
             {/* <Button className="bg-violet-400 hover:bg-violet-500 text-black font-semibold px-8 py-6 text-lg rounded-full">
               Try for $0.00
