@@ -5,17 +5,17 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function LoginPage() {
-  const supabase = createClient();
+  // const supabase = createClient();
 
-  const { data: user, error } = await supabase.auth.getUser();
+  // const { data: user, error } = await supabase.auth.getUser();
 
-  if (error) {
-    console.error(error);
-  }
+  // if (error) {
+  //   console.error(error);
+  // }
 
-  if (user.user) {
-    redirect("/");
-  }
+  // if (user.user) {
+  //   redirect("/");
+  // }
 
   return (
     <div className="flex min-h-screen bg-background">

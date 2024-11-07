@@ -9,8 +9,6 @@ import { Search, Globe, ChevronDown, Menu } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 
 const Header = () => {
-  const supabase = createClient();
-
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -18,6 +16,7 @@ const Header = () => {
   }, []);
 
   const getUser = async () => {
+    const supabase = createClient();
     const { data, error } = await supabase.auth.getUser();
 
     if (error) {
