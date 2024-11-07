@@ -1,12 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CartButtonSheet from "../Checkout/CartButtonSheet";
 import { Search, Globe, ChevronDown, Menu } from "lucide-react";
 
+import { createClient } from "@/utils/supabase/client";
+
 const Header = () => {
+  const supabase = createClient();
+
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    const { data, error } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error(error);
+    }
+
+    if (data.user) {
+      setUser(data.user);
+    }
+  };
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <header className="border-b bg-gray-900 border-gray-700">
@@ -48,7 +70,7 @@ const Header = () => {
                 href="/why-audible"
                 className="text-gray-300 hover:text-white"
               >
-                Why Audible?
+                Why dollarbook?
               </Link>
             </nav>
           </div>
@@ -61,16 +83,18 @@ const Header = () => {
                 placeholder="Search for a great book"
               />
             </div>
-            <button className="text-gray-300 hover:text-white hidden md:block">
-              Hi, fawaz! <ChevronDown className="inline-block h-4 w-4" />
-            </button>
+            {user && (
+              <button className="text-gray-300 hover:text-white hidden md:block">
+                Hi, fawaz! <ChevronDown className="inline-block h-4 w-4" />
+              </button>
+            )}
             {/* <button className="text-gray-300 hover:text-white hidden md:block">
                   0 Credits <ChevronDown className="inline-block h-4 w-4" />
                 </button> */}
             <button className="text-gray-300 hover:text-white">
               <Globe className="h-5 w-5" />
             </button>
-            <CartButtonSheet />
+            {user && <CartButtonSheet />}
             <button
               className="md:hidden text-gray-300 hover:text-white"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

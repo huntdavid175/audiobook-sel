@@ -115,7 +115,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -127,6 +127,7 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
 
 type CartItem = {
   id: number;
@@ -149,6 +150,32 @@ export default function CartButtonSheet() {
   const removeItem = () => {
     setCartItem(null);
   };
+
+  const [cart, setCart] = useState<any>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase
+      .channel("cart_channel")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "cart" },
+        (payload) => console.log(payload)
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "cart" },
+        (payload) => console.log(payload)
+      )
+      .subscribe();
+  }, []);
+
+  // const insertToCart = async() => {
+  // const supabase = createClient()
+
+  //   const {data, error} = await supabase.from
+  // }
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>

@@ -407,6 +407,8 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import Player from "@/components/Audio/Player";
+import { addToCart } from "./actions";
+import AddToCart from "@/components/Forms/AddToCart";
 
 type Book = {
   id: string;
@@ -539,13 +541,7 @@ export default async function AudiobookPage({
                 </p>
               </CardContent>
               <CardFooter className="p-4 flex flex-col space-y-2">
-                <Button
-                  variant="secondary"
-                  className="w-full bg-orange-500 text-white hover:bg-orange-600"
-                >
-                  <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart - $
-                  {audiobook.price.toFixed(2)}
-                </Button>
+                <AddToCart title={audiobook.title} price={audiobook.price} />
               </CardFooter>
             </Card>
           </div>
