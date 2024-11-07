@@ -213,7 +213,7 @@ export default function CartButtonSheet() {
       <SheetTrigger asChild>
         <button className="text-gray-300 hover:text-white relative">
           <ShoppingCart className="h-6 w-6" />
-          {cartItem && (
+          {cart.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
               {cart.length}
             </span>
