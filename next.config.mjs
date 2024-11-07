@@ -16,7 +16,6 @@ const nextConfig = {
       { protocol: "https", hostname: "cdn.myportfolio.com" },
     ],
   },
-  rules: {},
 };
 
 export default nextConfig;

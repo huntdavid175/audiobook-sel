@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { addToCart } from "@/app/audiobook/[id]/actions";
+import { addToCart } from "@/app/(browse)/audiobook/[id]/actions";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 

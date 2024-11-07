@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import BrowseSection, { Book } from "@/components/Landing/BrowseSection";
 import { createClient } from "@/utils/supabase/server";
+import Header from "@/components/Header/Header";
 
 export default async function Component() {
   const supabase = createClient();
@@ -56,77 +57,79 @@ export default async function Component() {
   // };
 
   return (
-    <div className="min-h-screen bg-[#000914] pb-20">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-transparent transform -skew-x-12 translate-x-1/4" />
-        <div className="container mx-auto px-4 py-16 relative">
-          <div className="max-w-2xl mx-auto text-center mb-12">
-            <div className="w-16 h-16 mx-auto mb-6 bg-violet-400 rounded-full flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-white"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Audiobooks
-            </h1>
-            <p className="text-lg text-gray-300 mb-8">
-              Top-rated shows, news, comedy, true crime, storytelling–it&apos;s
-              all here.
-            </p>
-            {/* <Button className="bg-violet-400 hover:bg-violet-500 text-black font-semibold px-8 py-6 text-lg rounded-full">
+    <>
+      <Header />
+      <div className="min-h-screen bg-[#000914] pb-20">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-transparent transform -skew-x-12 translate-x-1/4" />
+          <div className="container mx-auto px-4 py-16 relative">
+            <div className="max-w-2xl mx-auto text-center mb-12">
+              <div className="w-16 h-16 mx-auto mb-6 bg-violet-400 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-8 h-8 text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Audiobooks
+              </h1>
+              <p className="text-lg text-gray-300 mb-8">
+                Top-rated shows, news, comedy, true crime,
+                storytelling–it&apos;s all here.
+              </p>
+              {/* <Button className="bg-violet-400 hover:bg-violet-500 text-black font-semibold px-8 py-6 text-lg rounded-full">
               Try for $0.00
             </Button> */}
-            {/* <p className="text-sm text-gray-400 mt-4">
+              {/* <p className="text-sm text-gray-400 mt-4">
               New customers only. Auto-renews at $14.95/mo. + applicable tax
               after 30 days. Cancel anytime.
             </p> */}
-          </div>
-
-          {/* Phone Mockup */}
-          <div className="max-w-md mx-auto relative">
-            <Image
-              src="https://m.media-amazon.com/images/I/413pXgU21sL._SL500_.jpg"
-              width={300}
-              height={600}
-              alt="Phone mockup"
-              className="mx-auto"
-            />
-            {/* Podcast covers positioned absolutely around the phone */}
-            <div className="absolute -left-32 top-1/4">
-              <Image
-                src="https://m.media-amazon.com/images/I/51CatMooFnL._SL500_.jpg"
-                width={150}
-                height={150}
-                alt="Podcast cover"
-                className="rounded-lg shadow-lg"
-              />
             </div>
-            <div className="absolute -right-32 top-1/4">
+
+            {/* Phone Mockup */}
+            <div className="max-w-md mx-auto relative">
               <Image
-                src="https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg"
-                width={150}
-                height={150}
-                alt="Podcast cover"
-                className="rounded-lg shadow-lg"
+                src="https://m.media-amazon.com/images/I/413pXgU21sL._SL500_.jpg"
+                width={300}
+                height={600}
+                alt="Phone mockup"
+                className="mx-auto"
               />
+              {/* Podcast covers positioned absolutely around the phone */}
+              <div className="absolute -left-32 top-1/4">
+                <Image
+                  src="https://m.media-amazon.com/images/I/51CatMooFnL._SL500_.jpg"
+                  width={150}
+                  height={150}
+                  alt="Podcast cover"
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div className="absolute -right-32 top-1/4">
+                <Image
+                  src="https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg"
+                  width={150}
+                  height={150}
+                  alt="Podcast cover"
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Popular Now Section */}
-      {/* <section className="container mx-auto px-4 py-16">
+        {/* Popular Now Section */}
+        {/* <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Hear what's popular now
@@ -207,10 +210,11 @@ export default async function Component() {
         </div>
       </section> */}
 
-      {/* Browse  */}
-      <section className=" py-">
-        <BrowseSection books={books} />
-      </section>
-    </div>
+        {/* Browse  */}
+        <section className=" py-">
+          <BrowseSection books={books} />
+        </section>
+      </div>
+    </>
   );
 }

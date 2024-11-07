@@ -13,7 +13,7 @@ export default async function LoginPage() {
     console.error(error);
   }
 
-  if (user) {
+  if (user.user) {
     redirect("/");
   }
 

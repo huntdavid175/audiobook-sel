@@ -12,7 +12,7 @@ export default async function SignupPage() {
     console.error(error);
   }
 
-  if (user) {
+  if (user.user) {
     redirect("/");
   }
 
