@@ -51,21 +51,28 @@ const Player = ({
 
   return (
     <div>
-      <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 p-4">
         <div className="container mx-auto flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" onClick={togglePlayPause}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={togglePlayPause}
+                className="text-white hover:bg-orange-400"
+              >
                 {isPlaying ? (
                   <Pause className="h-6 w-6" />
                 ) : (
                   <Play className="h-6 w-6" />
                 )}
               </Button>
-              <div className="text-sm font-medium">{bookTitle} - Preview</div>
+              <div className="text-sm font-medium text-white">
+                {bookTitle} - Preview
+              </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Volume2 className="h-4 w-4" />
+              <Volume2 className="h-4 w-4 text-white" />
               <Slider
                 className="w-24"
                 value={[volume]}
@@ -75,7 +82,11 @@ const Player = ({
               />
             </div>
           </div>
-          <Progress value={progress} className="w-full" />
+          <Progress
+            value={progress}
+            className="w-full bg-gray-800"
+            // indicatorClassName="bg-white"
+          />
         </div>
       </div>
 
