@@ -128,9 +128,10 @@ import {
 import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
+import { deleteCartItem } from "@/app/(browse)/audiobook/[id]/actions";
 
 type CartItem = {
-  id: number;
+  id: string;
   title: string;
   author: string;
   price: number;
@@ -139,19 +140,8 @@ type CartItem = {
 
 export default function CartButtonSheet() {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItem, setCartItem] = useState<CartItem | null>({
-    id: 1,
-    title: "The Midnight Library",
-    author: "Matt Haig",
-    price: 14.99,
-    image: "https://m.media-amazon.com/images/I/51c7U55rhIL._SL160_.jpg",
-  });
 
-  const removeItem = () => {
-    setCartItem(null);
-  };
-
-  const [cart, setCart] = useState<any>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
     subscribeToCart();
@@ -186,8 +176,8 @@ export default function CartButtonSheet() {
           { event: "DELETE", schema: "public", table: "cart" },
           (payload: any) =>
             setCart((prev: CartItem[]) => {
-              prev.filter(
-                (prevItem: CartItem) => prevItem.id !== payload.new.id
+              return prev.filter(
+                (prevItem: CartItem) => prevItem.id !== payload.old.id
               );
             })
         )
@@ -224,45 +214,57 @@ export default function CartButtonSheet() {
         <SheetHeader>
           <SheetTitle className="text-white">Your Cart</SheetTitle>
           <SheetDescription className="text-gray-400">
-            {cartItem ? "You have 1 item in your cart" : "Your cart is empty"}
+            {cart.length > 1
+              ? `You have ${cart.length} item in your cart`
+              : "Your cart is empty"}
           </SheetDescription>
         </SheetHeader>
         <div className="flex-grow overflow-auto py-4">
-          {cartItem && (
-            <div className="flex items-center gap-4 py-4 border-b border-gray-700">
-              <Image
-                src={cartItem.image}
-                alt={cartItem.title}
-                width={120}
-                height={120}
-                className="rounded-md"
-              />
-              <div className="flex-grow">
-                <h3 className="font-semibold text-white">{cartItem.title}</h3>
-                <p className="text-sm text-gray-400">{cartItem.author}</p>
-                <p className="font-medium mt-2 text-orange-400">
-                  ${cartItem.price.toFixed(2)}
-                </p>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={removeItem}
-                aria-label="Remove item"
-                className="text-gray-400 hover:text-white hover:bg-gray-800"
+          {cart.length > 0 &&
+            cart.map((cartItem: CartItem) => (
+              <div
+                className="flex items-center gap-4 py-4 border-b border-gray-700"
+                key={cartItem.id}
               >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
+                <Image
+                  src={cartItem.image}
+                  alt={cartItem.title}
+                  width={120}
+                  height={120}
+                  className="rounded-md"
+                />
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-white">{cartItem.title}</h3>
+                  <p className="text-sm text-gray-400">{cartItem.author}</p>
+                  <p className="font-medium mt-2 text-orange-400">
+                    ${cartItem.price.toFixed(2)}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => deleteCartItem(cartItem.id)}
+                  aria-label="Remove item"
+                  className="text-gray-400 hover:text-white hover:bg-gray-800"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
         </div>
         <div className="border-t border-gray-700 pt-4">
-          {cartItem && (
+          {cart.length > 0 && (
             <>
               <div className="flex justify-between items-center mb-4">
                 <span className="font-semibold text-white">Total</span>
                 <span className="font-semibold text-orange-400">
-                  ${cartItem.price.toFixed(2)}
+                  {cart
+                    .reduce(
+                      (prevPrice: number, currentItem) =>
+                        prevPrice + currentItem.price,
+                      0
+                    )
+                    .toFixed(2)}
                 </span>
               </div>
               <Button className="w-full bg-orange-500 text-white hover:bg-orange-600">
@@ -270,7 +272,7 @@ export default function CartButtonSheet() {
               </Button>
             </>
           )}
-          {!cartItem && (
+          {cart.length < 1 && (
             <div className="text-center text-gray-400">
               <p>Your cart is empty. Add an audiobook to get started!</p>
             </div>

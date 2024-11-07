@@ -5,7 +5,17 @@ import { addToCart } from "@/app/(browse)/audiobook/[id]/actions";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 
-const AddToCart = ({ title, price }: { title: string; price: number }) => {
+const AddToCart = ({
+  title,
+  price,
+  author,
+  image,
+}: {
+  title: string;
+  price: number;
+  author: string;
+  image: string;
+}) => {
   return (
     <form className="w-full" action={addToCart}>
       <input
@@ -17,6 +27,18 @@ const AddToCart = ({ title, price }: { title: string; price: number }) => {
       <input
         name="price"
         value={price}
+        onChange={() => {}}
+        className="hidden"
+      />
+      <input
+        name="author"
+        value={author}
+        onChange={() => {}}
+        className="hidden"
+      />
+      <input
+        name="image"
+        value={image}
         onChange={() => {}}
         className="hidden"
       />

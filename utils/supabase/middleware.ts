@@ -28,7 +28,6 @@ export async function updateSession(request: NextRequest) {
       },
     }
   );
-  console.log("Current Path:", request.nextUrl.pathname);
 
   // IMPORTANT: Avoid writing any logic between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug

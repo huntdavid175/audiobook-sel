@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Header from "@/components/Header/Header";
+import { Providers } from "@/components/providers";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -20,10 +21,12 @@ export const metadata: Metadata = {
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      <Header />
-      {children}
-    </div>
+    <Providers>
+      <div>
+        <Header />
+        {children}
+      </div>
+    </Providers>
   );
 };
 

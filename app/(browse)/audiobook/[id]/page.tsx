@@ -541,7 +541,12 @@ export default async function AudiobookPage({
                 </p>
               </CardContent>
               <CardFooter className="p-4 flex flex-col space-y-2">
-                <AddToCart title={audiobook.title} price={audiobook.price} />
+                <AddToCart
+                  title={audiobook.title}
+                  price={audiobook.price}
+                  author={audiobook.author}
+                  image={audiobook.image}
+                />
               </CardFooter>
             </Card>
           </div>
