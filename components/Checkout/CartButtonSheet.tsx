@@ -151,31 +151,62 @@ export default function CartButtonSheet() {
     setCartItem(null);
   };
 
-  const [cart, setCart] = useState<any>(null);
+  const [cart, setCart] = useState<any>([]);
 
   useEffect(() => {
-    const supabase = createClient();
-
-    supabase
-      .channel("cart_channel")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "cart" },
-        (payload) => console.log(payload)
-      )
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "cart" },
-        (payload) => console.log(payload)
-      )
-      .subscribe();
+    subscribeToCart();
   }, []);
 
-  // const insertToCart = async() => {
-  // const supabase = createClient()
+  const subscribeToCart = async () => {
+    const supabase = createClient();
+    const { data: userData, error: userDataError } =
+      await supabase.auth.getUser();
 
-  //   const {data, error} = await supabase.from
-  // }
+    if (userDataError) {
+      console.error(userDataError);
+    }
+
+    if (userData.user) {
+      fetchCart(supabase, userData.user?.id);
+
+      supabase
+        .channel("cart_channel")
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "cart",
+            filter: `user=eq.${userData.user?.id}`,
+          },
+          (payload) => setCart((prev: any) => [...prev, payload.new])
+        )
+        .on(
+          "postgres_changes",
+          { event: "DELETE", schema: "public", table: "cart" },
+          (payload: any) =>
+            setCart((prev: CartItem[]) => {
+              prev.filter(
+                (prevItem: CartItem) => prevItem.id !== payload.new.id
+              );
+            })
+        )
+        .subscribe();
+    }
+  };
+
+  const fetchCart = async (supabase: any, userId: string) => {
+    const { data: cartData, error: cartDataError } = await supabase
+      .from("cart")
+      .select("*")
+      .eq("user", userId);
+
+    if (cartDataError) {
+      console.error(cartDataError);
+    }
+
+    setCart(cartData);
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -184,7 +215,7 @@ export default function CartButtonSheet() {
           <ShoppingCart className="h-6 w-6" />
           {cartItem && (
             <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              1
+              {cart.length}
             </span>
           )}
         </button>
