@@ -202,8 +202,6 @@ export default function CartButtonSheet() {
       console.error(cartDataError);
     }
 
-    console.log(cartData);
-
     setCartAtom(cartData);
   };
 

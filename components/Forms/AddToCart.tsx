@@ -4,8 +4,6 @@ import React from "react";
 import { addToCart } from "@/app/(browse)/audiobook/[id]/actions";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
-import { useAtomValue, useSetAtom, atom } from "jotai";
-import { CartItem, cartInit } from "../Checkout/CartButtonSheet";
 
 const AddToCart = ({
   id,
@@ -16,8 +14,6 @@ const AddToCart = ({
   id: string;
   cart: any;
 }) => {
-  const cartAtomState = useAtomValue(cartInit);
-
   return (
     <form className="w-full" action={addToCart}>
       <input name="id" value={id} onChange={() => {}} className="hidden" />
