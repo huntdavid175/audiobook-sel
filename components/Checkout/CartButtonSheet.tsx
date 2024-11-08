@@ -139,7 +139,7 @@ export type CartItem = {
   image: string;
 };
 
-export const cartInit = atom<CartItem[]>([]);
+export const cartInit = atom<any[]>([]);
 
 export default function CartButtonSheet() {
   const [isOpen, setIsOpen] = useState(false);

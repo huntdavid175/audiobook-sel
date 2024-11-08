@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export const addToCart = async (formData: FormData) => {
   const supabase = createClient();
@@ -20,9 +21,7 @@ export const addToCart = async (formData: FormData) => {
     console.error(error);
   }
 
-  if (data) {
-    console.dir(data);
-  }
+  revalidatePath(`/audiobook/${product_id}`);
 };
 
 export const deleteCartItem = async (cartId: string) => {

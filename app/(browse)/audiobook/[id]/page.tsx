@@ -459,8 +459,22 @@ export default async function AudiobookPage({
     console.error(relatedBooksDataError);
   }
 
+  const { data: cartData, error: cartDataError } = await supabase
+    .from("cart")
+    .select("*,book:books(*)");
+
+  if (cartDataError) {
+    console.error(cartDataError);
+  }
+
   const audiobook: Book = audiobookData && audiobookData[0];
   const relatedBooks: Book[] = relatedBooksData ?? [];
+
+  const currentCart: any = cartData;
+
+  const isInCart = currentCart.find(
+    (cartItem: any) => cartItem.book.id === audiobook.id
+  );
 
   const mockReviews: Review[] = [
     {
@@ -541,13 +555,13 @@ export default async function AudiobookPage({
                 </p>
               </CardContent>
               <CardFooter className="p-4 flex flex-col space-y-2">
-                <AddToCart
-                  title={audiobook.title}
-                  price={audiobook.price}
-                  author={audiobook.author}
-                  image={audiobook.image}
-                  id={audiobook.id}
-                />
+                {!isInCart && (
+                  <AddToCart
+                    id={audiobook.id}
+                    price={audiobook.price}
+                    cart={currentCart}
+                  />
+                )}
               </CardFooter>
             </Card>
           </div>
