@@ -130,6 +130,7 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { deleteCartItem } from "@/app/(browse)/audiobook/[id]/actions";
 import { atom, useAtom } from "jotai";
+import CheckoutButton from "./CheckoutButton";
 
 export type CartItem = {
   id: string;
@@ -278,9 +279,7 @@ export default function CartButtonSheet() {
                     .toFixed(2)}
                 </span>
               </div>
-              <Button className="w-full bg-orange-500 text-white hover:bg-orange-600">
-                Proceed to Checkout
-              </Button>
+              <CheckoutButton />
             </>
           )}
           {cartAtom.length < 1 && (
