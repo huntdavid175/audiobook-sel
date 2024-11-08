@@ -51,3 +51,17 @@ export async function signup(formData: FormData) {
   revalidatePath("/", "layout");
   redirect("/auth/confirm-email");
 }
+
+export async function logout() {
+  const supabase = createClient();
+
+  console.log("hit");
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error(error);
+  }
+
+  revalidatePath("/");
+}

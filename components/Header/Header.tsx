@@ -7,6 +7,7 @@ import CartButtonSheet from "../Checkout/CartButtonSheet";
 import { Search, Globe, ChevronDown, Menu } from "lucide-react";
 
 import { createClient } from "@/utils/supabase/client";
+import UserDropDown from "../Dropdown/UserDropdown";
 
 const Header = () => {
   const [user, setUser] = useState<any>(null);
@@ -30,7 +31,7 @@ const Header = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="border-b bg-gray-900 border-gray-700">
+    <header className="border-b bg-[#000914] border-gray-700">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -82,17 +83,34 @@ const Header = () => {
                 placeholder="Search for a great book"
               />
             </div>
-            {user && (
-              <button className="text-gray-300 hover:text-white hidden md:block">
-                Hi, fawaz! <ChevronDown className="inline-block h-4 w-4" />
-              </button>
-            )}
+            {user && <UserDropDown />}
             {/* <button className="text-gray-300 hover:text-white hidden md:block">
                   0 Credits <ChevronDown className="inline-block h-4 w-4" />
                 </button> */}
             <button className="text-gray-300 hover:text-white">
               <Globe className="h-5 w-5" />
             </button>
+
+            {!user && (
+              <>
+                <Link href="/auth/login">
+                  <Button
+                    variant="ghost"
+                    className="text-gray-300 hover:text-white hover:bg-transparent"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/suth/signup">
+                  <Button
+                    variant="outline"
+                    className="text-black hover:text-white bg-orange-400 border-orange-400 hover:bg-orange-600 hover:border-orange-600"
+                  >
+                    Sign up
+                  </Button>
+                </Link>
+              </>
+            )}
             {user && <CartButtonSheet />}
             <button
               className="md:hidden text-gray-300 hover:text-white"
