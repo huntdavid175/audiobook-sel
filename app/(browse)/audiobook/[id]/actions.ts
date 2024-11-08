@@ -10,14 +10,11 @@ export const addToCart = async (formData: FormData) => {
     console.error(userDataError);
   }
 
-  const title = formData.get("title");
-  const price = formData.get("price");
-  const author = formData.get("author");
-  const image = formData.get("image");
+  const product_id = formData.get("id");
 
   const { data, error } = await supabase
     .from("cart")
-    .insert({ title, price, author, image, user: userData?.user?.id });
+    .insert({ product_id, user_id: userData?.user?.id });
 
   if (error) {
     console.error(error);

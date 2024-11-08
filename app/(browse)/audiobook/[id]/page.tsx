@@ -546,6 +546,7 @@ export default async function AudiobookPage({
                   price={audiobook.price}
                   author={audiobook.author}
                   image={audiobook.image}
+                  id={audiobook.id}
                 />
               </CardFooter>
             </Card>

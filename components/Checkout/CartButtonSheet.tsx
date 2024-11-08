@@ -129,8 +129,9 @@ import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { deleteCartItem } from "@/app/(browse)/audiobook/[id]/actions";
+import { atom, useAtom } from "jotai";
 
-type CartItem = {
+export type CartItem = {
   id: string;
   title: string;
   author: string;
@@ -138,10 +139,14 @@ type CartItem = {
   image: string;
 };
 
+export const cartInit = atom<CartItem[]>([]);
+
 export default function CartButtonSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  // const [cart, setCart] = useState<CartItem[]>([]);
+
+  const [cartAtom, setCartAtom] = useAtom(cartInit);
 
   useEffect(() => {
     subscribeToCart();
@@ -167,16 +172,18 @@ export default function CartButtonSheet() {
             event: "INSERT",
             schema: "public",
             table: "cart",
-            filter: `user=eq.${userData.user?.id}`,
+            filter: `user_id=eq.${userData.user?.id}`,
           },
-          (payload) => setCart((prev: any) => [...prev, payload.new])
+          (payload) => {
+            fetchCart(supabase, userData.user?.id);
+          }
         )
         .on(
           "postgres_changes",
           { event: "DELETE", schema: "public", table: "cart" },
           (payload: any) =>
-            setCart((prev: CartItem[]) => {
-              return prev.filter(
+            setCartAtom((cartAtom: CartItem[]) => {
+              return cartAtom.filter(
                 (prevItem: CartItem) => prevItem.id !== payload.old.id
               );
             })
@@ -188,14 +195,16 @@ export default function CartButtonSheet() {
   const fetchCart = async (supabase: any, userId: string) => {
     const { data: cartData, error: cartDataError } = await supabase
       .from("cart")
-      .select("*")
-      .eq("user", userId);
+      .select("*,book:books(*)")
+      .eq("user_id", userId);
 
     if (cartDataError) {
       console.error(cartDataError);
     }
 
-    setCart(cartData);
+    console.log(cartData);
+
+    setCartAtom(cartData);
   };
 
   return (
@@ -203,9 +212,9 @@ export default function CartButtonSheet() {
       <SheetTrigger asChild>
         <button className="text-gray-300 hover:text-white relative">
           <ShoppingCart className="h-6 w-6" />
-          {cart.length > 0 && (
+          {cartAtom.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              {cart.length}
+              {cartAtom.length}
             </span>
           )}
         </button>
@@ -214,30 +223,34 @@ export default function CartButtonSheet() {
         <SheetHeader>
           <SheetTitle className="text-white">Your Cart</SheetTitle>
           <SheetDescription className="text-gray-400">
-            {cart.length > 1
-              ? `You have ${cart.length} item in your cart`
+            {cartAtom.length > 1
+              ? `You have ${cartAtom.length} item in your cart`
               : "Your cart is empty"}
           </SheetDescription>
         </SheetHeader>
         <div className="flex-grow overflow-auto py-4">
-          {cart.length > 0 &&
-            cart.map((cartItem: CartItem) => (
+          {cartAtom.length > 0 &&
+            cartAtom.map((cartItem: any) => (
               <div
                 className="flex items-center gap-4 py-4 border-b border-gray-700"
                 key={cartItem.id}
               >
                 <Image
-                  src={cartItem.image}
-                  alt={cartItem.title}
+                  src={cartItem.book.image}
+                  alt={cartItem.book.title}
                   width={120}
                   height={120}
                   className="rounded-md"
                 />
                 <div className="flex-grow">
-                  <h3 className="font-semibold text-white">{cartItem.title}</h3>
-                  <p className="text-sm text-gray-400">{cartItem.author}</p>
+                  <h3 className="font-semibold text-white">
+                    {cartItem.book.title}
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    {cartItem.book.author}
+                  </p>
                   <p className="font-medium mt-2 text-orange-400">
-                    ${cartItem.price.toFixed(2)}
+                    ${cartItem.book.price.toFixed(2)}
                   </p>
                 </div>
                 <Button
@@ -253,15 +266,15 @@ export default function CartButtonSheet() {
             ))}
         </div>
         <div className="border-t border-gray-700 pt-4">
-          {cart.length > 0 && (
+          {cartAtom.length > 0 && (
             <>
               <div className="flex justify-between items-center mb-4">
                 <span className="font-semibold text-white">Total</span>
                 <span className="font-semibold text-orange-400">
-                  {cart
+                  {cartAtom
                     .reduce(
-                      (prevPrice: number, currentItem) =>
-                        prevPrice + currentItem.price,
+                      (prevPrice: number, currentItem: any) =>
+                        prevPrice + currentItem.book.price,
                       0
                     )
                     .toFixed(2)}
@@ -272,7 +285,7 @@ export default function CartButtonSheet() {
               </Button>
             </>
           )}
-          {cart.length < 1 && (
+          {cartAtom.length < 1 && (
             <div className="text-center text-gray-400">
               <p>Your cart is empty. Add an audiobook to get started!</p>
             </div>
