@@ -3,17 +3,11 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface PurchaseSuccessProps {
-  bookTitle: string;
-  bookCover: string;
-  authorName: string;
-}
-
 export default function PurchaseSuccess({
   bookTitle,
   bookCover,
   authorName,
-}: PurchaseSuccessProps) {
+}: any) {
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col justify-center items-center px-4">
       <div className="max-w-md w-full bg-gray-800 rounded-lg shadow-xl p-8 text-center">
