@@ -129,8 +129,9 @@ import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { deleteCartItem } from "@/app/(browse)/audiobook/[id]/actions";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import CheckoutButton from "./CheckoutButton";
+import { cartInit } from "@/utils/jotai/instances";
 
 export type CartItem = {
   id: string;
@@ -139,8 +140,6 @@ export type CartItem = {
   price: number;
   image: string;
 };
-
-export const cartInit = atom<any[]>([]);
 
 export default function CartButtonSheet() {
   const [isOpen, setIsOpen] = useState(false);

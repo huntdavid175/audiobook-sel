@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { Input } from "../ui/input";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
+import { mobileMenuAtom } from "@/utils/jotai/instances";
 
-const mobileMenuAtom = atom<boolean>(false);
 export const MobileMenuButton = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useAtom(mobileMenuAtom);
   return (

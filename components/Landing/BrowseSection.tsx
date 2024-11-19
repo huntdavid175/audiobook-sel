@@ -247,6 +247,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
 }
 
 export default function BrowseSection({ books }: { books: Book[] }) {
+  // console.log(books);
   return (
     <div className="bg-[#000914] py-8">
       <div className="container mx-auto px-4">

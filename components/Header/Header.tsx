@@ -73,7 +73,7 @@ const Header = async () => {
                 placeholder="Search for a great book"
               />
             </div>
-            {user && <UserDropDown />}
+            {user.user !== null && <UserDropDown />}
             {/* <button className="text-gray-300 hover:text-white hidden md:block">
                   0 Credits <ChevronDown className="inline-block h-4 w-4" />
                 </button> */}

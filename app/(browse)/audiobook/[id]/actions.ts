@@ -1,6 +1,7 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export const addToCart = async (formData: FormData) => {
   const supabase = createClient();
@@ -9,6 +10,10 @@ export const addToCart = async (formData: FormData) => {
 
   if (userDataError) {
     console.error(userDataError);
+  }
+
+  if (userData.user === null) {
+    redirect("/auth/login");
   }
 
   const product_id = formData.get("id");
