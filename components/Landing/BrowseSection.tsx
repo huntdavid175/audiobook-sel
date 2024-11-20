@@ -101,7 +101,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
             <Carousel>
               <CarouselContent>
                 {genre.books.map((book) => (
-                  <CarouselItem className="basis-1/6">
+                  <CarouselItem className="basis-1/6" key={book.id}>
                     {" "}
                     <div key={book.id} className="flex-shrink-0 w-60">
                       <Link href={`/audiobook/${book.id}`}>
