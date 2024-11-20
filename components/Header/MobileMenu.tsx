@@ -26,7 +26,7 @@ const MobileMenu = () => {
       {mobileMenuState && (
         <nav className="mt-4 md:hidden">
           <Link
-            href="/library"
+            href="/dashboard"
             className="block py-2 text-violet-400 font-medium"
           >
             Library
