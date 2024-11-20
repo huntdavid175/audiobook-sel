@@ -177,56 +177,58 @@ const DashboardLibrary = ({ books }: { books: any }) => {
       </div>
 
       {/* Audiobooks Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
-        {books.map((book: any) => (
-          <div key={book.id} className="flex flex-col">
-            <div className="relative aspect-square mb-2">
-              <Image
-                src={book.book.image}
-                alt={book.title}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 rounded-lg">
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="text-white hover:bg-orange-400"
-                >
-                  <Play className="h-12 w-12" />
-                </Button>
-              </div>
-              {/* book.progress > 0  should be the condition */}
-              {book.progress == null && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-violet-500"
-                    // style={{ width: `${book.progress}%` }}
-                    style={{ width: `${60}%` }}
-                  />
+      {books.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+          {books.map((book: any) => (
+            <div key={book.id} className="flex flex-col">
+              <div className="relative aspect-square mb-2">
+                <Image
+                  src={book.book.image}
+                  alt={book.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 rounded-lg">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="text-white hover:bg-orange-400"
+                  >
+                    <Play className="h-12 w-12" />
+                  </Button>
                 </div>
-              )}
+                {/* book.progress > 0  should be the condition */}
+                {book.progress == null && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-violet-500"
+                      // style={{ width: `${book.progress}%` }}
+                      style={{ width: `${60}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-semibold text-sm mb-1 line-clamp-2 text-white">
+                {book.title}
+              </h3>
+              <p className="text-sm text-gray-400">{book.author}</p>
             </div>
-            <h3 className="font-semibold text-sm mb-1 line-clamp-2 text-white">
-              {book.title}
-            </h3>
-            <p className="text-sm text-gray-400">{book.author}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16">
+          <h2 className="text-2xl font-semibold mb-4">
+            Your Library looks empty
+          </h2>
 
-      {/* <div className="text-center py-16">
-        <h2 className="text-2xl font-semibold mb-4">
-          Your Library looks empty
-        </h2>
-
-        <p className="text-gray-600 mb-8">
-          When you buy or add titles to your Library, they&apos;ll be displayed
-          here.
-        </p>
-        <Button className="rounded-full ">Browse Catalog</Button>
-      </div> */}
+          <p className="text-gray-600 mb-8">
+            When you buy or add titles to your Library, they&apos;ll be
+            displayed here.
+          </p>
+          <Button className="rounded-full ">Browse Catalog</Button>
+        </div>
+      )}
     </main>
   );
 };

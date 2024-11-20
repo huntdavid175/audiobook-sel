@@ -5,6 +5,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export type Book = {
   id: string;
@@ -29,135 +36,6 @@ type Genre = {
   description: string | null;
   created_at: string | null;
 };
-
-// const categories: Category[] = [
-//   {
-//     id: "money-finance",
-//     title: "Money & Finance",
-//     podcasts: [
-//       {
-//         id: "1",
-//         title: "THE ED MYLETT SHOW",
-//         author: "Ed Mylett",
-//         image: "https://m.media-amazon.com/images/I/516e-Ps+1VL._SL160_.jpg",
-//       },
-//       {
-//         id: "2",
-//         title: "The Canadian Real Estate Investor",
-//         author: "Daniel Focus",
-//         image: "https://m.media-amazon.com/images/I/41HbIUqq88L._SL160_.jpg",
-//       },
-//       {
-//         id: "3",
-//         title: "Business Wars (Ad-free)",
-//         author: "Wondery",
-//         image: "https://m.media-amazon.com/images/I/51c7U55rhIL._SL160_.jpg",
-//       },
-//       {
-//         id: "4",
-//         title: "How I Built This",
-//         author: "Guy Raz",
-//         image: "https://m.media-amazon.com/images/I/51W4O9X8IYL._SL160_.jpg",
-//       },
-//       {
-//         id: "5",
-//         title: "Jocko Podcast",
-//         author: "Jocko DEFCOR",
-//         image: "https://m.media-amazon.com/images/I/41MFeivp4qL._SL160_.jpg",
-//       },
-//       {
-//         id: "6",
-//         title: "The School of Greatness",
-//         author: "Lewis Howes",
-//         image: "https://m.media-amazon.com/images/I/41fYZSWLsVL._SL160_.jpg",
-//       },
-//     ],
-//   },
-//   {
-//     id: "comedy",
-//     title: "Comedy",
-//     podcasts: [
-//       {
-//         id: "7",
-//         title: "SmartLess",
-//         author: "Jason Bateman",
-//         image: "https://m.media-amazon.com/images/I/51-Vm1JUzZL._SL320_.jpg",
-//       },
-//       {
-//         id: "8",
-//         title: "Morbid",
-//         author: "Morbid Network",
-//         image: "https://m.media-amazon.com/images/I/51NQrlGZURL._SL320_.jpg",
-//       },
-//       {
-//         id: "9",
-//         title: "21 Days of Meditation",
-//         author: "Aaptiv",
-//         image: "https://m.media-amazon.com/images/I/51706uMD-HL._SL320_.jpg",
-//       },
-//       {
-//         id: "10",
-//         title: "Conan O'Brien Needs a Friend",
-//         author: "Team Coco",
-//         image: "https://m.media-amazon.com/images/I/512XdMWjKAL._SL320_.jpg",
-//       },
-//       {
-//         id: "11",
-//         title: "Mike Ward Sous Écoute",
-//         author: "Mike Ward",
-//         image: "https://m.media-amazon.com/images/I/41om-xG+otL._SL320_.jpg",
-//       },
-//       {
-//         id: "12",
-//         title: "crime de bine",
-//         author: "crime de bine",
-//         image: "https://m.media-amazon.com/images/I/41jtwBpH9oL._SL320_.jpg",
-//       },
-//     ],
-//   },
-//   {
-//     id: "health-wellness",
-//     title: "Health & Wellness",
-//     podcasts: [
-//       {
-//         id: "13",
-//         title: "The Mel Robbins Podcast",
-//         author: "Mel Robbins",
-//         image: "https://m.media-amazon.com/images/I/51+gvyZG96L._SL160_.jpg",
-//       },
-//       {
-//         id: "14",
-//         title: "Just Sleep - Bedtime Stories",
-//         author: "Bedtime Stories",
-//         image: "https://m.media-amazon.com/images/I/51W464cRsDL._SL160_.jpg",
-//       },
-//       {
-//         id: "15",
-//         title: "Nothing much happens",
-//         author: "iHeartPodcasts",
-//         image: "https://m.media-amazon.com/images/I/41P2hA7g1bL._SL160_.jpg",
-//       },
-//       {
-//         id: "16",
-//         title: "Huberman Lab",
-//         author: "Scicomm Media",
-//         image: "https://m.media-amazon.com/images/I/51DKlWJhvdL._SL160_.jpg",
-//       },
-//       {
-//         id: "17",
-//         title: "Sleep Magic: Guided Sleep Meditation",
-//         author: "Sleepiest & Co",
-//         image: "https://m.media-amazon.com/images/I/51PkCmnthfL._SL160_.jpg",
-//       },
-//       {
-//         id: "18",
-//         title: "Meditations",
-//         author: "Audible Sleep",
-//         image: "https://m.media-amazon.com/images/I/41aV0yXXXjL._SL160_.jpg",
-//       },
-//     ],
-//   },
-// ];
 
 function CategoryCarousel({ genre }: { genre: Genre }) {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -198,7 +76,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
       <div className="relative">
         <div className="overflow-hidden" ref={carouselRef}>
           <div className="flex gap-4">
-            {genre.books.map((book) => (
+            {/* {genre.books.map((book) => (
               <div key={book.id} className="flex-shrink-0 w-60">
                 <Link href={`/audiobook/${book.id}`}>
                   <div className="relative aspect-square mb-2">
@@ -218,7 +96,36 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
                   </p>
                 </Link>
               </div>
-            ))}
+            ))} */}
+
+            <Carousel>
+              <CarouselContent>
+                {genre.books.map((book) => (
+                  <CarouselItem className="basis-1/6">
+                    {" "}
+                    <div key={book.id} className="flex-shrink-0 w-60">
+                      <Link href={`/audiobook/${book.id}`}>
+                        <div className="relative aspect-square mb-2">
+                          <Image
+                            src={book.image}
+                            alt={book.title}
+                            width={240}
+                            height={240}
+                            className="rounded-lg object-cover"
+                          />
+                        </div>
+                        <h3 className="text-white font-medium text-sm line-clamp-1">
+                          {book.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm line-clamp-1">
+                          Written by: {book.author}
+                        </p>
+                      </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
         {showLeftArrow && (
