@@ -35,9 +35,11 @@ const Header = async () => {
                   /> */}
             </Link>
             <nav className="hidden md:flex items-center space-x-6">
-              <Link href="/library" className="text-violet-400 font-medium">
-                Library
-              </Link>
+              {user.user !== null && (
+                <Link href="/dashboard" className="text-violet-400 font-medium">
+                  Library
+                </Link>
+              )}
               {/* <Link
                     href="/wish-list"
                     className="text-gray-300 hover:text-white"

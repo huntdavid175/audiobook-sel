@@ -189,7 +189,11 @@ const DashboardLibrary = ({ books }: { books: any }) => {
                 className="rounded-lg"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 rounded-lg">
-                <Button size="icon" variant="ghost" className="text-white">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-white hover:bg-orange-400"
+                >
                   <Play className="h-12 w-12" />
                 </Button>
               </div>
