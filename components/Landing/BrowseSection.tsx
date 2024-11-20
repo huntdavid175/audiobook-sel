@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "../ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,7 +76,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
       </div>
       <div className="relative">
         <div className="overflow-hidden" ref={carouselRef}>
-          <div className="flex gap-4">
+          <div className="flex ">
             {/* {genre.books.map((book) => (
               <div key={book.id} className="flex-shrink-0 w-60">
                 <Link href={`/audiobook/${book.id}`}>
@@ -97,12 +98,11 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
                 </Link>
               </div>
             ))} */}
-
+            {/* 
             <Carousel>
               <CarouselContent>
                 {genre.books.map((book) => (
-                  <CarouselItem className="basis-1/6" key={book.id}>
-                    {" "}
+                  <CarouselItem key={book.id}>
                     <div key={book.id} className="flex-shrink-0 w-60">
                       <Link href={`/audiobook/${book.id}`}>
                         <div className="relative aspect-square mb-2">
@@ -125,10 +125,51 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
+            </Carousel> */}
+
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full "
+            >
+              <CarouselContent>
+                {genre.books.map((book) => (
+                  <CarouselItem
+                    key={book.id}
+                    className="md:basis-1/3 lg:basis-1/5 2xl:basis-1/6"
+                  >
+                    <div
+                      key={book.id}
+                      className="flex-shrink-0 w-full md:w-60 p-1"
+                    >
+                      <Link href={`/audiobook/${book.id}`}>
+                        <div className="relative aspect-square mb-2">
+                          <Image
+                            src={book.image}
+                            alt={book.title}
+                            width={240}
+                            height={240}
+                            className="rounded-lg object-cover"
+                          />
+                        </div>
+                        <h3 className="text-white font-medium text-sm line-clamp-1">
+                          {book.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm line-clamp-1">
+                          Written by: {book.author}
+                        </p>
+                      </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
           </div>
         </div>
-        {showLeftArrow && (
+        {/* {showLeftArrow && (
           <Button
             variant="ghost"
             size="icon"
@@ -147,7 +188,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
           >
             <ChevronRight className="w-8 h-8 text-white" />
           </Button>
-        )}
+        )} */}
       </div>
     </div>
   );
