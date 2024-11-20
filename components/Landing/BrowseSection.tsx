@@ -137,7 +137,7 @@ function CategoryCarousel({ genre }: { genre: Genre }) {
                 {genre.books.map((book) => (
                   <CarouselItem
                     key={book.id}
-                    className="md:basis-1/3 lg:basis-1/5 2xl:basis-1/6"
+                    className="basis-1/2 md:basis-1/3 lg:basis-1/5 2xl:basis-1/6"
                   >
                     <div
                       key={book.id}
