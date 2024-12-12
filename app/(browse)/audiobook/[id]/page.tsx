@@ -62,7 +62,12 @@ export default async function AudiobookPage({
   }
 
   const { data: relatedBooksData, error: relatedBooksDataError } =
-    await supabase.from("books").select("*").limit(3).neq("id", params.id);
+    await supabase
+      .from("books")
+      .select("*")
+      .limit(3)
+      .eq("genre_id", "3a8348d3-9baf-42b1-a423-75d4c83b9beb")
+      .neq("id", params.id);
 
   if (relatedBooksDataError) {
     console.error(relatedBooksDataError);
