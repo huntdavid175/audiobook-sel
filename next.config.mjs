@@ -14,6 +14,7 @@ const nextConfig = {
       { protocol: "https", hostname: "d1csarkz8obe9u.cloudfront.net" },
       { protocol: "https", hostname: "beetifulbookcovers.com" },
       { protocol: "https", hostname: "cdn.myportfolio.com" },
+      { protocol: "https", hostname: "books.google.ca" },
     ],
   },
 };
